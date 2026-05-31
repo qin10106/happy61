@@ -183,6 +183,7 @@ body {
     will-change: transform, opacity;
     animation: starRise var(--rise-dur) linear var(--rise-delay) forwards;
     opacity: 0;
+    text-shadow: 0 0 6px currentColor;
 }
 
 @keyframes starRise {

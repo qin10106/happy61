@@ -832,12 +832,12 @@ function spawnStarParticles() {
         el.textContent = starChars[Math.floor(Math.random() * starChars.length)];
 
         var left = Math.random() * 96;
-        var size = 12 + Math.random() * 18;
+        var size = 16 + Math.random() * 22;
         var sway = (Math.random() - 0.5) * 120;
         var dur = 4 + Math.random() * 7;
         var delay = Math.random() * 4;
         var spin = (Math.random() - 0.5) * 360;
-        var opacity = .55 + Math.random() * .45;
+        var opacity = .7 + Math.random() * .3;
 
         el.style.left = left + 'vw';
         el.style.fontSize = size + 'px';
