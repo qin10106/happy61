@@ -64,14 +64,15 @@ function showContinueBtn(callback) {
 
 // DOMContentLoaded 事件处理
 document.addEventListener('DOMContentLoaded', function() {
-    audio = new Audio('music/bgMusic.m4a');
+    audio = document.createElement('audio');
     audio.preload = 'metadata';
     audio.volume = 0.6;
     audio.loop = true;
+    audio.src = 'music/bgMusic.mp3';
 
-    // 音频加载出错时打印日志
+    // 音频加载出错时重试一次
     audio.addEventListener('error', function() {
-        console.log('音乐加载失败，请检查网络');
+        setTimeout(function() { audio.load(); }, 500);
     }, { once: true });
 
     var savedTime = sessionStorage.getItem('musicTime');
