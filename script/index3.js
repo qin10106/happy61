@@ -64,7 +64,7 @@ function showContinueBtn(callback) {
 
 // DOMContentLoaded 事件处理
 document.addEventListener('DOMContentLoaded', function() {
-    audio = new Audio('music/bgMusic.mp3');
+    audio = new Audio('music/bgMusic.m4a');
     audio.preload = 'metadata';
     audio.volume = 0.6;
     audio.loop = true;
