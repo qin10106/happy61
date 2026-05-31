@@ -812,6 +812,53 @@ function runPhotoHeartThenStar(onAllDone) {
 }
 
 // ============================================================
+//  星光粒子生成
+// ============================================================
+function spawnStarParticles() {
+    var container = document.getElementById('starParticles');
+    if (!container) return;
+    container.innerHTML = '';
+
+    var starChars = ['★', '✦', '✧', '⭑', '✶'];
+    var colors = [
+        '#ffcc80','#ffb7b2','#ff9a9e','#fad390','#f8a5c2',
+        '#ffd1dc','#a29bfe','#ffc3a0','#fbc2eb','#ff6b81',
+        '#e3bae8','#fd79a8','#ffeaa7','#fab1a0','#dfe6e9'
+    ];
+
+    for (var i = 0; i < 40; i++) {
+        var el = document.createElement('span');
+        el.className = 'star-particle';
+        el.textContent = starChars[Math.floor(Math.random() * starChars.length)];
+
+        var left = Math.random() * 96;
+        var size = 12 + Math.random() * 18;
+        var sway = (Math.random() - 0.5) * 120;
+        var dur = 4 + Math.random() * 7;
+        var delay = Math.random() * 4;
+        var spin = (Math.random() - 0.5) * 360;
+        var opacity = .55 + Math.random() * .45;
+
+        el.style.left = left + 'vw';
+        el.style.fontSize = size + 'px';
+        el.style.color = colors[Math.floor(Math.random() * colors.length)];
+        el.style.setProperty('--sway', sway + 'px');
+        el.style.setProperty('--spin', spin + 'deg');
+        el.style.setProperty('--rise-dur', dur + 's');
+        el.style.setProperty('--rise-delay', delay + 's');
+        el.style.setProperty('--star-opacity', opacity);
+
+        container.appendChild(el);
+
+        // 动画结束后清理
+        var totalTime = (delay + dur) * 1000;
+        setTimeout(function(el) {
+            if (el.parentNode) el.parentNode.removeChild(el);
+        }, totalTime, el);
+    }
+}
+
+// ============================================================
 //  动画时间轴
 // ============================================================
 var animationTimeline = function() {
@@ -898,12 +945,11 @@ var animationTimeline = function() {
             0.1, 'party')
         .from('.wish h5', 0.5, { opacity: 0, y: 10, skewX: '-15deg' }, 'party')
 
-        // ---- 第6段：圆形粒子 ----
-        .staggerTo('.eight svg', 1.5, {
-            visibility: 'visible', opacity: 0, scale: 80,
-            repeat: 3, repeatDelay: 1.4
-        }, 0.3)
-        .to('.six', 0.5, { opacity: 0, y: 30, zIndex: '-1' })
+        // ---- 第6段：星光粒子 ----
+        .call(function() {
+            spawnStarParticles();
+        })
+        .to('.six', 0.5, { opacity: 0, y: 30, zIndex: '-1' }, '+=6')
 
         // ---- 第7段：结尾 ----
         .staggerFrom('.nine p', 1, ideaIn, 1.2)

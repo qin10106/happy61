@@ -175,25 +175,32 @@ body {
     left: 30%;
 }
 
-/* === 圆点粒子 === */
-.eight svg {
-    width: 25px;
+/* === 星光粒子 === */
+.star-particle {
     position: absolute;
-    top: 0;
-    left: 0;
-    visibility: hidden;
-    z-index: -1;
+    bottom: -30px;
+    pointer-events: none;
+    will-change: transform, opacity;
+    animation: starRise var(--rise-dur) linear var(--rise-delay) forwards;
+    opacity: 0;
 }
 
-.eight svg:nth-child(1) { top: 7vh; left: 5vw; fill: #ff9a9e; }
-.eight svg:nth-child(2) { top: 23vh; left: 35vw; fill: #fad390; }
-.eight svg:nth-child(3) { top: 33vh; left: 23vw; fill: #f8a5c2; }
-.eight svg:nth-child(4) { top: 43vh; left: 57vw; fill: #a29bfe; }
-.eight svg:nth-child(5) { top: 68vh; left: 7vw; fill: #fd79a8; }
-.eight svg:nth-child(6) { top: 42vh; left: 77vw; fill: #fdcb6e; }
-.eight svg:nth-child(7) { top: 68vh; left: 83vw; fill: #e3bae8; }
-.eight svg:nth-child(8) { top: 86vh; left: 37vw; fill: #74b9ff; }
-.eight svg:nth-child(9) { top: 94vh; left: 87vw; fill: #55efc4; }
+@keyframes starRise {
+    0% {
+        opacity: 0;
+        transform: translateY(0) translateX(0) rotate(0deg);
+    }
+    10% {
+        opacity: var(--star-opacity, .9);
+    }
+    85% {
+        opacity: var(--star-opacity, .9);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-105vh) translateX(var(--sway)) rotate(var(--spin));
+    }
+}
 
 /* === 祝福文字 === */
 .wish-hbd {
