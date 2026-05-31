@@ -268,6 +268,56 @@ body {
     animation: shimmer 6s linear infinite;
 }
 
+/* === 加载进度 === */
+.loading-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    z-index: 1000;
+    background: linear-gradient(160deg, #fce4ec 0%, #f8bbd0 30%, #e1bee7 60%, #bbdefb 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity .5s ease;
+}
+.loading-overlay.done {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.loading-box {
+    text-align: center;
+}
+
+.loading-text {
+    font-size: 1.4rem;
+    color: #7b5ea7;
+    margin: 0 0 18px;
+}
+
+.loading-bar-track {
+    width: 220px;
+    height: 6px;
+    background: rgba(255,255,255,.5);
+    border-radius: 3px;
+    margin: 0 auto 10px;
+    overflow: hidden;
+}
+
+.loading-bar-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #ff9a9e, #fad390, #f8a5c2);
+    border-radius: 3px;
+    transition: width .35s ease;
+}
+
+.loading-percent {
+    font-size: .85rem;
+    color: #a29bfe;
+    margin: 0;
+}
+
 /* === 点击提示 === */
 .hint {
     position: fixed;
@@ -287,6 +337,10 @@ body {
     padding: 16px 40px;
     border-radius: 40px;
     backdrop-filter: blur(10px);
+    opacity: 0;
+}
+.hint.show {
+    opacity: 1;
 }
 
 @keyframes hintPulse {

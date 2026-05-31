@@ -62,8 +62,54 @@ function showContinueBtn(callback) {
     btn.addEventListener('touchstart', onClick);
 }
 
+// 预加载资源 + 进度条
+function preloadAllAssets(onDone) {
+    var totalItems = photoPaths.length + 1; // 9 photos + 1 music
+    var loaded = 0;
+
+    function updateProgress() {
+        var pct = Math.round((loaded / totalItems) * 100);
+        document.getElementById('loadingBar').style.width = pct + '%';
+        document.getElementById('loadingPercent').textContent = pct + '%';
+        if (loaded >= totalItems) {
+            setTimeout(function() {
+                document.getElementById('loadingOverlay').classList.add('done');
+                document.querySelector('.hint').classList.add('show');
+                if (onDone) onDone();
+            }, 400);
+        }
+    }
+
+    // 预加载音乐
+    var musicLoader = document.createElement('audio');
+    musicLoader.preload = 'auto';
+    musicLoader.src = 'music/bgMusic.mp3';
+    musicLoader.addEventListener('canplaythrough', function() {
+        loaded++;
+        updateProgress();
+    }, { once: true });
+    musicLoader.addEventListener('error', function() {
+        loaded++;
+        updateProgress();
+    }, { once: true });
+    // 触发加载
+    musicLoader.load();
+
+    // 预加载所有照片
+    photoPaths.forEach(function(src) {
+        var img = new Image();
+        img.onload = function() { loaded++; updateProgress(); };
+        img.onerror = function() { loaded++; updateProgress(); };
+        img.src = src;
+    });
+}
+
 // DOMContentLoaded 事件处理
 document.addEventListener('DOMContentLoaded', function() {
+    // 开始预加载，完成后用户看到提示
+    preloadAllAssets(function() {
+        // 所有资源就绪，用户点击后音乐即刻播放
+    });
     audio = document.createElement('audio');
     audio.preload = 'metadata';
     audio.volume = 0.6;
